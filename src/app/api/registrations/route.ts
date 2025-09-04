@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     const pk = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     if (!secret || !pk) return NextResponse.json({error: "Stripe not configured"}, {status: 500});
-    const stripe = new Stripe(secret, {apiVersion: "2024-12-18.acacia"});
+    const stripe = new Stripe(secret, {apiVersion: "2024-06-20"});
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
