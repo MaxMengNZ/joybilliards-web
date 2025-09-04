@@ -8,19 +8,7 @@ export function createSupabaseServerClient() {
   if (!url || !anonKey) {
     throw new Error("Missing Supabase env: NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY");
   }
-  return createServerClient(url, anonKey, {
-    cookies: {
-      get(name: string) {
-        return cookieStore.get(name)?.value;
-      },
-      set(name: string, value: string, options: {path?: string; domain?: string; maxAge?: number; httpOnly?: boolean; secure?: boolean; sameSite?: "lax"|"strict"|"none"}) {
-        cookieStore.set({name, value, ...options});
-      },
-      remove(name: string, options: {path?: string; domain?: string}) {
-        cookieStore.set({name, value: "", ...options});
-      },
-    },
-  });
+  return createServerClient(url, anonKey, { cookies: cookieStore });
 }
 
 
