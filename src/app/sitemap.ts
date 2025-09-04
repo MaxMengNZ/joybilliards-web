@@ -1,5 +1,5 @@
 import type {MetadataRoute} from "next";
-import {locales} from "@/i18n/routing";
+import {locales} from "@/i18n/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
