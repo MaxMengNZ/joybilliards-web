@@ -17,9 +17,9 @@ export default async function NewsDetail({params}: {params: Promise<{slug: strin
     <main className="mx-auto max-w-[900px] px-6 sm:px-8 py-16">
       <h1 className="text-3xl font-semibold tracking-tight">{post.title}</h1>
       <div className="text-xs text-gray-500 mt-1">{post.published_at ? new Date(post.published_at).toLocaleDateString() : ""}</div>
-      {"content_md" in (post as any) && (post as any).content_md && (
+      {"content_md" in (post as Record<string, unknown>) && (post as Record<string, unknown>).content_md && (
         <article className="prose dark:prose-invert mt-6">
-          <ReactMarkdown>{(post as any).content_md}</ReactMarkdown>
+          <ReactMarkdown>{String((post as Record<string, unknown>).content_md)}</ReactMarkdown>
         </article>
       )}
     </main>

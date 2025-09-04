@@ -20,7 +20,7 @@ export async function getPost(slug: string): Promise<PostItem | null> {
   if (!hasSupabaseEnv()) return mockPosts.find(p => p.slug === slug) ?? null;
   const supabase = createSupabaseServerClient();
   const {data} = await supabase.from("posts").select("slug,title,excerpt,published_at,content_md").eq("slug", slug).maybeSingle();
-  return (data as any) || null;
+  return (data as { slug: string; title: string; excerpt?: string; published_at?: string; content_md?: string } | null);
 }
 
 

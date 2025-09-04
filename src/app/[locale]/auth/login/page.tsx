@@ -35,8 +35,9 @@ export default function LoginPage() {
       });
       if (error) throw error;
       setStatus("sent");
-    } catch (err: any) {
-      setError(err?.message || "发送失败，请稍后重试");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "发送失败，请稍后重试";
+      setError(message);
       setStatus("error");
     }
   }

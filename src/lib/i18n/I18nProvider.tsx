@@ -1,10 +1,11 @@
 "use client";
 import {createContext, useContext, PropsWithChildren, useMemo} from "react";
 
-type Messages = Record<string, any>;
+type Messages = Record<string, unknown>;
 
-function getByPath(obj: any, path: string): string {
-  return path.split(".").reduce((acc, key) => (acc && acc[key] != null ? acc[key] : undefined), obj) ?? path;
+function getByPath(obj: Record<string, unknown>, path: string): string {
+  const value = path.split(".").reduce<unknown>((acc, key) => (acc && typeof acc === "object" && (acc as Record<string, unknown>)[key] != null ? (acc as Record<string, unknown>)[key] : undefined), obj);
+  return typeof value === "string" ? value : path;
 }
 
 type I18nContextValue = {

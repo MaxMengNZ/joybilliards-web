@@ -17,7 +17,7 @@ export default async function MyPosts({params}: {params: Promise<{locale: string
           <div key={p.slug} className="rounded border p-4 flex items-center justify-between">
             <div>
               <div className="font-medium">{p.title}</div>
-              <div className="text-xs text-gray-500">{p.published_at ? new Date(p.published_at as any).toLocaleString() : ""}</div>
+              <div className="text-xs text-gray-500">{p.published_at ? new Date(String(p.published_at)).toLocaleString() : ""}</div>
             </div>
             <div className="text-sm flex gap-3">
               <Link href={`/${locale}/news/${p.slug}`} className="underline">View</Link>
