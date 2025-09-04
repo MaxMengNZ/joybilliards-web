@@ -20,6 +20,15 @@ export async function getAvailability(dateISO: string, slotMinutes = 30) {
     s.from("bookings").select("id,table_id,start_time,end_time,status").gte("start_time", dayStart.toISOString()).lt("start_time", dayEnd.toISOString())
   ]);
 
+  // Fallback preview when no tables seeded yet
+  const effectiveTables = (tables && tables.length > 0)
+    ? tables
+    : Array.from({ length: 10 }).map((_, i) => ({
+        id: `mock-${i + 1}`,
+        name: `T${String(i + 1).padStart(2, "0")}`,
+        model: (i < 8 ? "Q7" : "Q8") as "Q7" | "Q8",
+      }));
+
   const slots: string[] = [];
   {
     const t = new Date(dayStart);
@@ -37,7 +46,7 @@ export async function getAvailability(dateISO: string, slotMinutes = 30) {
     tableIdToBookings[b.table_id].push({ start: b.start_time, end: b.end_time });
   });
 
-  const availability = (tables ?? []).map((t) => {
+  const availability = (effectiveTables ?? []).map((t) => {
     const arr: Slot[] = slots.map(pair => {
       const [sISO, eISO] = pair.split("|");
       const busy = (tableIdToBookings[t.id] ?? []).some(b => overlaps(sISO, eISO, b.start, b.end));
