@@ -5,7 +5,7 @@ import type {Locale} from "@/i18n/routing";
 
 export default async function EditPost({params}: {params: Promise<{locale: Locale; slug: string}>}) {
   const {locale, slug} = await params;
-  const s = createSupabaseServerClient();
+  const s = await createSupabaseServerClient();
   const {data: {user}} = await s.auth.getUser();
   if (!user) redirect(`/${locale}/auth/login`);
   const {data} = await s.from("posts").select("id,title,excerpt,content_md,author_id").eq("slug", slug).single();
