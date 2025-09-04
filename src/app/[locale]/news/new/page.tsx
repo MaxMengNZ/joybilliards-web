@@ -1,17 +1,18 @@
 import {redirect} from "next/navigation";
 import {createSupabaseServerClient} from "@/lib/supabase/server";
 import {hasSupabaseEnv} from "@/lib/env";
+import type {Locale} from "@/i18n/routing";
 
-export default async function NewPostPage({params}: {params: Promise<{locale: string}>}) {
+export default async function NewPostPage({params}: {params: Promise<{locale: Locale}>}) {
   const {locale} = await params;
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {data: {user}} = await supabase.auth.getUser();
   if (!user) redirect(`/${locale}/auth/login`);
   const enabled = hasSupabaseEnv();
 
   async function createPost(formData: FormData) {
     "use server";
-    const s = createSupabaseServerClient();
+    const s = await createSupabaseServerClient();
     const title = String(formData.get("title") || "").trim();
     const excerpt = String(formData.get("excerpt") || "").trim();
     const content_md = String(formData.get("content_md") || "");

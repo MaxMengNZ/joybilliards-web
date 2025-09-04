@@ -1,12 +1,13 @@
 import {createSupabaseServerClient} from "@/lib/supabase/server";
 import {redirect} from "next/navigation";
 import {cookies} from "next/headers";
+import type {Locale} from "@/i18n/routing";
 import {MemberQR} from "@/components/profile/MemberQR";
 
 export default async function ProfilePage({
   params,
 }: {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }) {
   const { locale } = await params;
   const cookieStore = await cookies();
@@ -14,7 +15,7 @@ export default async function ProfilePage({
 
   let user: { id: string; email?: string | null } | null = null;
   if (!isDemo) {
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
     const { data } = await supabase.auth.getUser();
     user = data.user;
     if (!user) {
@@ -24,7 +25,7 @@ export default async function ProfilePage({
 
   async function signOutAction() {
     "use server";
-    const s = createSupabaseServerClient();
+    const s = await createSupabaseServerClient();
     await s.auth.signOut();
     redirect(`/${locale}`);
   }
