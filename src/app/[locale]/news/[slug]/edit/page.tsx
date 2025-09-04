@@ -14,7 +14,7 @@ export default async function EditPost({params}: {params: Promise<{locale: Local
 
   async function updatePost(formData: FormData) {
     "use server";
-    const s2 = createSupabaseServerClient();
+    const s2 = await createSupabaseServerClient();
     const title = String(formData.get("title") || "").trim();
     const excerpt = String(formData.get("excerpt") || "").trim();
     const content_md = String(formData.get("content_md") || "");
@@ -24,7 +24,7 @@ export default async function EditPost({params}: {params: Promise<{locale: Local
 
   async function deletePost() {
     "use server";
-    const s2 = createSupabaseServerClient();
+    const s2 = await createSupabaseServerClient();
     await s2.from("posts").delete().eq("id", postId);
     redirect(`/${locale}/news/mine`);
   }
