@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "title": "Joy Billiards",
+    "description": "Membership, events, booking and rankings platform"
+  },
+  "nav": {
+    "home": "Home",
+    "events": "Events",
+    "booking": "Booking",
+    "rankings": "Rankings",
+    "news": "News",
+    "profile": "Profile",
+    "login": "Login",
+    "register": "Register"
+  },
+  "footer": {
+    "address": "Address",
+    "phone": "Phone",
+    "follow": "Follow us",
+    "email": "Email",
+    "quick": "Quick Links"
+  },
+  "locale": {
+    "en": "English",
+    "zh": "中文"
+  },
+  "home": {
+    "hero": "Welcome to Joy Billiards – New Zealand Heyball Hub",
+    "sub": "The official home for Heyball tournaments, membership, and rankings in New Zealand.",
+    "cta": "Explore Events",
+    "join": "Join Membership",
+    "booking": "Book a table",
+    "news": "Latest news",
+    "featured_title": "Upcoming Events",
+    "membership_title": "Why Join Joy Billiards?",
+    "membership_desc": "Enjoy member pricing, priority booking and ranking points.",
+    "membership_cta": "View membership",
+    "benefits_title": "Why Join Joy Billiards?",
+    "benefit_price": "Member-only pricing",
+    "benefit_points": "Points & rankings",
+    "benefit_official": "Official tournament entry",
+    "benefit_qr": "Digital membership card"
+  }
+}
+
+

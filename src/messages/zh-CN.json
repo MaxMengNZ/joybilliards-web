@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "title": "Joy Billiards",
+    "description": "会员、赛事、订台与排名平台"
+  },
+  "nav": {
+    "home": "首页",
+    "events": "赛事",
+    "booking": "订台",
+    "rankings": "排名",
+    "news": "新闻",
+    "profile": "我的",
+    "login": "登录",
+    "register": "注册"
+  },
+  "footer": {
+    "address": "地址",
+    "phone": "电话",
+    "follow": "关注我们",
+    "email": "邮箱",
+    "quick": "快速链接"
+  },
+  "locale": {
+    "en": "English",
+    "zh": "中文"
+  },
+  "home": {
+    "hero": "Welcome to Joy Billiards – New Zealand Heyball Hub",
+    "sub": "The official home for Heyball tournaments, membership, and rankings in New Zealand.",
+    "cta": "Explore Events",
+    "join": "Join Membership",
+    "booking": "Book Now",
+    "news": "Latest news",
+    "featured_title": "Upcoming Events",
+    "membership_title": "Why Join Joy Billiards?",
+    "membership_desc": "Enjoy member pricing, priority booking and ranking points.",
+    "membership_cta": "View membership",
+    "benefits_title": "Why Join Joy Billiards?",
+    "benefit_price": "会员专属价格",
+    "benefit_points": "积分与排名体系",
+    "benefit_official": "官方赛事报名入口",
+    "benefit_qr": "数字会员卡（二维码）"
+  }
+}
+
+
