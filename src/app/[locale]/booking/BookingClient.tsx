@@ -193,7 +193,8 @@ export default function BookingClient() {
 function filteredSlots(slots: Slot[]) {
   return slots.filter(s => {
     const h = new Date(s.start).getHours();
-    return h >= 10 && h < 22;
+    // 10:00 to next day 02:00 (hours 0-1 included)
+    return (h >= 10 && h <= 23) || (h >= 0 && h < 2);
   });
 }
 

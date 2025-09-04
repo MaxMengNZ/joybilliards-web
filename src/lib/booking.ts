@@ -14,10 +14,16 @@ export async function getAvailability(dateISO: string, slotMinutes = 30) {
   const dayStart = new Date(dateISO);
   dayStart.setHours(0,0,0,0);
   const dayEnd = new Date(dayStart); dayEnd.setDate(dayEnd.getDate() + 1);
+  // Extend to 02:00 next day
+  const endPlus2h = new Date(dayEnd);
+  endPlus2h.setHours(endPlus2h.getHours() + 2);
 
   const [{ data: tables }, { data: bookings }] = await Promise.all([
     s.from("tables").select("id,name,model").order("name", { ascending: true }),
-    s.from("bookings").select("id,table_id,start_time,end_time,status").gte("start_time", dayStart.toISOString()).lt("start_time", dayEnd.toISOString())
+    // fetch any bookings overlapping [dayStart, endPlus2h)
+    s.from("bookings").select("id,table_id,start_time,end_time,status")
+      .lt("start_time", endPlus2h.toISOString())
+      .gt("end_time", dayStart.toISOString())
   ]);
 
   // Fallback preview when no tables seeded yet
@@ -32,7 +38,7 @@ export async function getAvailability(dateISO: string, slotMinutes = 30) {
   const slots: string[] = [];
   {
     const t = new Date(dayStart);
-    while (t < dayEnd) {
+    while (t < endPlus2h) {
       const start = new Date(t);
       const end = new Date(t); end.setMinutes(end.getMinutes() + slotMinutes);
       slots.push(`${start.toISOString()}|${end.toISOString()}`);
