@@ -1,4 +1,4 @@
-import type {Metadata, LayoutProps} from "next";
+import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import "../globals.css";
 import {I18nProvider} from "@/lib/i18n/I18nProvider";
@@ -23,7 +23,10 @@ export const metadata: Metadata = {
 export default async function LocaleLayout({
   children,
   params,
-}: LayoutProps<"/[locale]">) {
+}: Readonly<{
+  children: React.ReactNode;
+  params: {locale: string};
+}>) {
   const {locale} = params;
   const messages = (await import(`@/messages/${locale}.json`)).default;
 
