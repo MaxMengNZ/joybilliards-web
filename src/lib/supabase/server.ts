@@ -10,14 +10,14 @@ export async function createSupabaseServerClient() {
   }
   return createServerClient(url, anonKey, {
     cookies: {
-      get(name: string) {
-        return cookieStore.get(name)?.value;
+      getAll() {
+        const all = cookieStore.getAll();
+        return all?.map(c => ({ name: c.name, value: c.value })) ?? [];
       },
-      set(name: string, value: string, options: { path?: string; domain?: string; maxAge?: number; httpOnly?: boolean; secure?: boolean; sameSite?: "lax" | "strict" | "none" }) {
-        cookieStore.set({ name, value, ...options });
-      },
-      remove(name: string, options: { path?: string; domain?: string }) {
-        cookieStore.set({ name, value: "", ...options });
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value, options }) => {
+          cookieStore.set({ name, value, ...options });
+        });
       },
     },
   });
