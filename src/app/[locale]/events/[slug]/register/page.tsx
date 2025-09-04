@@ -1,8 +1,9 @@
 import {cookies} from "next/headers";
 import Link from "next/link";
 import {hasSupabaseEnv} from "@/lib/env";
+import type {Locale} from "@/i18n/routing";
 
-export default async function EventRegisterPage({ params }: { params: Promise<{ slug: string; locale: string }> }) {
+export default async function EventRegisterPage({ params }: { params: Promise<{ slug: string; locale: Locale }> }) {
   const { slug, locale } = await params;
   const cookieStore = await cookies();
   const isDemo = (process.env.NEXT_PUBLIC_ENABLE_DEMO === "true" || process.env.NODE_ENV !== "production") && cookieStore.get("demo")?.value === "1";
