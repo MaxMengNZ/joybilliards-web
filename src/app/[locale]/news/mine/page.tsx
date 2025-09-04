@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default async function MyPosts({params}: {params: Promise<{locale: string}>}) {
   const {locale} = await params;
-  const s = createSupabaseServerClient();
+  const s = await createSupabaseServerClient();
   const {data: {user}} = await s.auth.getUser();
   if (!user) redirect(`/${locale}/auth/login`);
   const {data} = await s.from("posts").select("slug,title,published_at").eq("author_id", user.id).order("published_at", {ascending: false});
