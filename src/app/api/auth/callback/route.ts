@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   const locale = searchParams.get("l") || "en-NZ";
   if (!code) return NextResponse.redirect(new URL(`/${locale}/auth/login`, request.url));
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {error} = await supabase.auth.exchangeCodeForSession(code);
   if (error) return NextResponse.redirect(new URL(`/${locale}/auth/login?error=${encodeURIComponent(error.message)}`, request.url));
 
