@@ -7,6 +7,7 @@ export function createSupabaseBrowserClient() {
   if (!url || !anonKey) {
     throw new Error("Missing Supabase env: NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY");
   }
+  // Realtime enabled by default; can pass options if needed later
   return createBrowserClient(url, anonKey);
 }
 

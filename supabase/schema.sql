@@ -108,4 +108,12 @@ do $$ begin
   end if;
 end $$;
 
+-- Enable Realtime on bookings (Supabase Realtime listens to this publication)
+do $$ begin
+  perform 1 from pg_publication where pubname = 'supabase_realtime';
+  if found then
+    execute 'alter publication supabase_realtime add table public.bookings';
+  end if;
+end $$;
+
 

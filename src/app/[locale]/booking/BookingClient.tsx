@@ -1,5 +1,6 @@
 "use client";
 import {useEffect, useMemo, useState} from "react";
+import {createSupabaseBrowserClient} from "@/lib/supabase/client";
 
 type Table = { id: string; name: string; model: "Q7" | "Q8" };
 type Slot = { start: string; end: string; status: "free" | "busy" };
@@ -48,6 +49,24 @@ export default function BookingClient() {
     }
     load();
     return () => { cancelled = true; };
+  }, [dateISO]);
+
+  // Realtime: 监听 bookings 变化，若与当前日期相关则刷新
+  useEffect(() => {
+    const s = createSupabaseBrowserClient();
+    const channel = s.channel('bookings-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'bookings' }, (payload) => {
+        // 简化：变更即刷新当天
+        setTimeout(async () => {
+          try {
+            const res = await fetch(`/api/booking/availability?date=${encodeURIComponent(dateISO)}`, { cache: 'no-store' });
+            const json = (await res.json()) as Availability;
+            setData(json);
+          } catch {}
+        }, 50);
+      })
+      .subscribe();
+    return () => { s.removeChannel(channel); };
   }, [dateISO]);
 
   const filteredTables = useMemo(() => {
