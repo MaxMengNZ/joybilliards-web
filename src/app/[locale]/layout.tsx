@@ -4,7 +4,6 @@ import "../globals.css";
 import {I18nProvider} from "@/lib/i18n/I18nProvider";
 import {Header} from "@/components/layout/Header";
 import {ThemeProvider} from "next-themes";
-import {locales, type Locale} from "@/i18n/routing";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +25,7 @@ export default async function LocaleLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{locale: Locale}>;
+  params: Promise<{locale: string}>;
 }>) {
   const {locale} = await params;
   const messages = (await import(`@/messages/${locale}.json`)).default;
