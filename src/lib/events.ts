@@ -17,7 +17,7 @@ const mockEvents: EventItem[] = [
 
 export async function listEvents(): Promise<EventItem[]> {
   if (!hasSupabaseEnv()) return mockEvents;
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {data, error} = await supabase.from("events").select("slug,name,start_at,venue_id,published,fee_cents").eq("published", true).order("start_at", {ascending: true});
   if (error) return mockEvents;
   return (data || []).map((e: {slug: string; name: string; start_at: string; fee_cents?: number; published?: boolean}) => ({ slug: e.slug, name: e.name, start_at: e.start_at, fee_cents: e.fee_cents, published: e.published }));
@@ -25,7 +25,7 @@ export async function listEvents(): Promise<EventItem[]> {
 
 export async function getEventBySlug(slug: string): Promise<EventItem | null> {
   if (!hasSupabaseEnv()) return mockEvents.find(e => e.slug === slug) ?? null;
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {data, error} = await supabase.from("events").select("slug,name,start_at,fee_cents,published").eq("slug", slug).single();
   if (error) return null;
   return data as {slug: string; name: string; start_at: string; fee_cents?: number; published?: boolean};
