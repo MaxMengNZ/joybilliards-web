@@ -4,7 +4,7 @@ import Stripe from "stripe";
 
 export async function POST(request: Request) {
   try {
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
     const body = await request.json();
     const {eventSlug, locale} = body as {eventSlug: string; locale: string};
     if (!eventSlug) return NextResponse.json({error: "Missing eventSlug"}, {status: 400});
